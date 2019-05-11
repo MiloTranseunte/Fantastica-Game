@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Area2D.gd" type="Script" id=1]
+[ext_resource path="res://assets/fireballoga/blue/keyframes/4.png" type="Texture" id=2]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 4.0
+height = 17.0
+
+[node name="Fireball" type="Area2D"]
+script = ExtResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( -2.10378, -2 )
+scale = Vector2( 0.0581883, 0.0696834 )
+texture = ExtResource( 2 )
+flip_h = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+light_mask = 1024
+rotation = 1.5708
+shape = SubResource( 1 )
+
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
+visible = false
+position = Vector2( -2.27041, 2.67924 )
+scale = Vector2( 1.13144, 0.735852 )
+rect = Rect2( -10, -11, 30, 19 )
+
+[connection signal="body_entered" from="." to="." method="_on_Fireball_body_entered"]
+[connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
