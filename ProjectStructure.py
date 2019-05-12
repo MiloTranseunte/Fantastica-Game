@@ -19,43 +19,27 @@ NODO_GODOT Universo():
 		Token_nextWorld_x			# Token Area2D con export variable File, str con dir de la escena siguiente
 		Enemy_x.enemyType.tscn		# Escena con Nodo de enemigos. O puede ser una carpeta de enemigos con carpeta por enemigo
 		Item_x.tscn					# Escena de Item/s
-		PowerUps_x.tscn				# Escena con Tokens powerUps
+		PowerUps_x.tscn				# Escena con Tokens powerUps (could be as an item)
 
 
 
 # Carpeta de las entidades tipo caracter que comparten comportamientos
-Entities():
-	Carpeta Player(Player_x):				
-		KinimaticBody2D.script:
-			Camera2D
-			AnimatedSprite
-			CollisionShape2D
-			Position2D				# Posición utilizada para la dirección del disparo
-			Timer					# Timer para controlar la cantidad de disparos por vez y otras secuencias
-			VisibilityNotifier2D	# Desde donde se lanza un Signal() hacia el nodo padre para notificar la desaparición de child Bullet_Player() de la pantalla
-			
-		SubCarpeta AnimatedSprite():
-			img_x.png
-			
-			SubCarpeta Bullet_Player():
-				Area2D.script:
-					AnimatedSprite
-					CollisionShape2D
-				
+CARPETA Entities():
+	CARPETA Player(Player_x):				
+		Player.tscn
+		Player.gd
+		x_Player.png				
 
-	Carpeta Enemies(Enemy_x):
-		KinimaticBody2D.script
-			AnimatedSprite
-			CollisionShape2D
-			Position2D				# Posición utilizada para la dirección del disparo
-			Timer					# Timer para controlar la cantidad de disparos por vez y otras secuencias
-			
-				SubCarpeta Bullet_Enemy():
-					Area2D.script:
-						AnimatedSprite
-						CollisionShape2D
+	CARPETA Enemies(Enemy_x):
+		x_enemy.tscn
+		x_enemy.gd
+		x_enemy.png
+		
+	Entity.tscn
+	Entity.gd
+					
 						
-Carpeta Items():
+CARPETA Items():
 	GenericItem.tscn				# main scene of a generic item
 	GenericItem.gd					# script of the generic item
 	SubCarpeta x_item():			# each instance of a particular item
@@ -63,27 +47,34 @@ Carpeta Items():
 		x_item.gd					# gd script of the particular item
 		Sprite/ AnimatedSprite
 
-Carpeta Weapons():
+CARPETA Weapons():
 	genericWeapon.tscn
 	genericWeapon.gd
-	SubCarpeta x_weapon():
+	SUBCARPETA x_weapon():
 		x_weapon.tscn
 		x_weapon.gd
 		Sprite / AnimatedSprite
+		
+CARPETA Powers():
+	genericPower.tscn
+	genericWeapon.gd
+	SUBCARPETA x_power() # Could Bullet, Fireball, Freeze, etc
+		x_power.tscn
+		x_power.gd
+		Sprite / AnimatedSprite
 
-Carpeta WORLDS():
+CARPETA WORLDS():
 	
 	# Carpeta donde se alojan los mundos y lo necesario y único para su funcionamiento
 	
-	SubCarpeta World_x():
-		SubCarpeta Tilemap():
+	CARPETA World_x(main):
+		SUBCARPETA Tilemap():
 			Tilemap_x.tscn
-			Tilemap_x.tres				
+			Tilemap_x.tres	
+			parallaxbackground.tres
 
 			# Carpeta donde se aloja la escena del Token_nextWorld			
 
-			SubCarpeta TokenNextWorld(Token_nextWorld):
+			SUBCARPETA TokenNextWorld(Token_nextWorld): # Area2D, token to nextWorld
 				TokenNextWorld.tscn
-					Area2D.script:
-						CollisionShape2D
-						Sprite
+				TokenNextWorld.gd:
